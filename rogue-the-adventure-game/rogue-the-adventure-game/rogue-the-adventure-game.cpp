@@ -1,7 +1,6 @@
-// rogue-the-adventur;e-game.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
+#include <Windows.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -17,8 +16,10 @@ public:
     int armor;
     int experience;
     int currentExperience;
+    int posY;
+    int posX;
 
-    Player()
+    Player(int x, int y)
     {
         level = 1;
         hitPoints = 100;
@@ -29,6 +30,24 @@ public:
         armor = 10;
         experience = 10;
         currentExperience = 0;
+        posX = x;
+        posY = y;
+    }
+
+    void Move(int x, int y) 
+    {
+        this->posY += y;
+        this->posX += x;
+    }
+
+    int GetPosX()
+    {
+        return this->posX;
+    }
+
+    int GetPosY()
+    {
+        return this->posY;
     }
 };
 
@@ -41,7 +60,7 @@ void render_canvas()
 {
 }
 
-void render_room(int height, int width)
+void create_room(int height, int width)
 {
     for (int i = 0; i < height; i++)
     {
@@ -53,26 +72,94 @@ void render_room(int height, int width)
             }
             else
             {
-                printf("-");
+                printf(".");
             }
         }
         cout << endl;
     }
 }
 
-int main()
+void handle_user_input(bool* salida, Player *player)
 {
-    Player player;
-    //render_hud(player);
-    render_room(5, 10);
+    if (_kbhit()) {
+        char l = _getch();
+        int ascii = (int)l;
+    
+        switch (ascii)
+        {
+            // ESC
+        case 27:
+            *salida = true;
+            break;
+            // A
+        case 97:
+            player->Move(-1, 0);
+            break;
+            // D
+        case 100:
+            player->Move(1, 0);
+            break;
+            // S
+        case 115:
+            player->Move(0, 1);
+            break;
+            // W
+        case 119:
+            player->Move(0, -1);
+            break;
+        }
+    }
 }
 
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
+void hide_cursor()
+{
+    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = false;
+    SetConsoleCursorInfo(consoleHandle, &info);
+}
 
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
+void set_cursor_position(int x, int y) 
+{
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(
+        GetStdHandle(STD_OUTPUT_HANDLE),
+        coord
+    );
+}
+
+void render_element(int x, int y, char element) 
+{
+    set_cursor_position(x, y);
+    cout << element;
+}
+
+void initial_setup() 
+{
+    hide_cursor();
+}
+
+void render_level(Player* player)
+{
+    create_room(10, 10);
+    render_element(player->GetPosX(), player->GetPosY(), '0');
+}
+
+int main()
+{
+    Player player(2, 2);
+    bool exitGame = false;
+
+    while (!exitGame) {
+        system("cls");
+
+        handle_user_input(&exitGame, &player);
+
+        render_level(&player);
+
+        Sleep(20);
+    }
+}
