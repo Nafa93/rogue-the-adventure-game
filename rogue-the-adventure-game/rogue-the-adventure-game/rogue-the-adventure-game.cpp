@@ -51,6 +51,20 @@ public:
     }
 };
 
+void change_color(int ForgC) {
+
+    WORD wColor;
+
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+    if (GetConsoleScreenBufferInfo(hStdOut, &csbi))
+    {
+        wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+        SetConsoleTextAttribute(hStdOut, wColor);
+    }
+}
+
 void render_hud(Player player)
 {
     printf("Level: %d Hits:%d(%d) Str:%d(%d) Gold:%d Armor:%d Exp:%d/%d", player.level, player.currentHitPoints, player.hitPoints, player.currentStrength, player.strength, player.gold, player.armor, player.currentExperience, player.experience);
@@ -68,10 +82,12 @@ void create_room(int height, int width)
         {
             if ((i == 0) || (j == 0) || (i == height - 1) || (j == width - 1))
             {
+                change_color(100);
                 printf("#");
             }
             else
             {
+                change_color(255);
                 printf(".");
             }
         }
@@ -180,6 +196,7 @@ void handle_user_input(bool* salida, Player *player)
 
 void render_element(int x, int y, char element) 
 {
+    change_color(50);
     set_cursor_position(x, y);
     cout << element;
 }
