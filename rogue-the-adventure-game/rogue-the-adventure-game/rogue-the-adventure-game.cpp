@@ -195,6 +195,8 @@ void render_level(Player* player)
     render_element(player->GetPosX(), player->GetPosY(), '0');
 }
 
+
+
 int main()
 {
     Player player(2, 2);
@@ -203,13 +205,13 @@ int main()
     initial_setup();
 
     while (!exitGame) {
+        
+        system("cls");
 
         render_level(&player);
         
         handle_user_input(&exitGame, &player);
 
-        system("cls");
-
-        Sleep(4);
+        Sleep(70);
     }
 }
