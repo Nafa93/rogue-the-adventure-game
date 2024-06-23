@@ -1,55 +1,9 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include "Player.h"
 
 using namespace std;
-
-class Player
-{
-public:
-    int level;
-    int hitPoints;
-    int currentHitPoints;
-    int strength;
-    int currentStrength;
-    int gold;
-    int armor;
-    int experience;
-    int currentExperience;
-    int posY;
-    int posX;
-
-    Player(int x, int y)
-    {
-        level = 1;
-        hitPoints = 100;
-        currentHitPoints = 100;
-        strength = 10;
-        currentStrength = 10;
-        gold = 0;
-        armor = 10;
-        experience = 10;
-        currentExperience = 0;
-        posX = x;
-        posY = y;
-    }
-
-    void Move(int x, int y) 
-    {
-        this->posY += y;
-        this->posX += x;
-    }
-
-    int GetPosX()
-    {
-        return this->posX;
-    }
-
-    int GetPosY()
-    {
-        return this->posY;
-    }
-};
 
 void change_color(int ForgC) {
 
@@ -151,11 +105,11 @@ char get_next_position(int posX, int posY, int movementX, int movementY)
 
 void check_collision_and_move(Player* player, int x, int y)
 {
-    char character = get_next_position(player->GetPosX(), player->GetPosY(), x, y);
+    char character = get_next_position(player->getPosX(), player->getPosY(), x, y);
 
     switch (character) {
         case '.':
-            player->Move(x, y);
+            player->move(x, y);
             break;
         default:
             break;
@@ -209,7 +163,7 @@ void initial_setup()
 void render_level(Player* player)
 {
     create_room(10, 10);
-    render_element(player->GetPosX(), player->GetPosY(), '0');
+    render_element(player->getPosX(), player->getPosY(), '0');
 }
 
 
