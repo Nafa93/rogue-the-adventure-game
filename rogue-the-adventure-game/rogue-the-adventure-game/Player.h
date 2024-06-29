@@ -16,9 +16,9 @@ public:
 
     Player(int x, int y);
 
-    void move(int x, int y);
+    void Move(int x, int y);
 
-    int getPosX() { return this->posX; }
-    int getPosY() { return this->posY; }
+    int GetPosX() { return this->posX; }
+    int GetPosY() { return this->posY; }
 };
 

@@ -15,7 +15,7 @@ Player::Player(int x, int y)
     posY = y;
 }
 
-void Player::move(int x, int y)
+void Player::Move(int x, int y)
 {
     this->posY += y;
     this->posX += x;

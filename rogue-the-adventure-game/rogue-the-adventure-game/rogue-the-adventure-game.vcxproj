@@ -127,11 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleHelper.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="rogue-the-adventure-game.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConsoleHelper.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="MapManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="rogue-the-adventure-game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
