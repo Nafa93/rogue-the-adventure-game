@@ -43,13 +43,30 @@ void ConsoleHelper::HideCursor()
     SetConsoleCursorInfo(consoleHandle, &info);
 }
 
+void ConsoleHelper::MoveCursorToPreviousPosition()
+{
+    SetCursorPosition(previousCursorPosition.X, previousCursorPosition.Y);
+}
+
+void ConsoleHelper::PrintElementOnPosition(int x, int y, char element) 
+{
+    SetCursorPosition(x, y);
+    std::cout << element;
+    MoveCursorToPreviousPosition();
+}
+
 void ConsoleHelper::SetCursorPosition(int x, int y)
 {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(hConsole, &csbi);
+    previousCursorPosition = csbi.dwCursorPosition;
+
     COORD coord;
     coord.X = x;
     coord.Y = y;
     SetConsoleCursorPosition(
-        GetStdHandle(STD_OUTPUT_HANDLE),
+        hConsole,
         coord
     );
 }

@@ -22,6 +22,8 @@ private:
 	ConsoleHelper* cHelper;
 
 	void HandleUserInput(bool* salida);
+	void RenderHud(std::shared_ptr<Player>& player);
+	void RenderScene();
 	void InitialSetup();
 	void GameLoop();
 	void Update();

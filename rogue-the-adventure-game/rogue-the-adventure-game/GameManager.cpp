@@ -54,8 +54,26 @@ void GameManager::HandleUserInput(bool* exit)
     }
 }
 
+void GameManager::RenderHud(std::shared_ptr<Player>& player)
+{
+    printf("Level: %d Hits:%d(%d) Str:%d Gold:%d Armor:%d Exp:%d/%d", player->level, player->currentHitPoints, player->hitPoints, player->strength, player->gold, player->armor, player->currentExperience, player->experience);
+}
+
+void GameManager::RenderScene() 
+{
+    mapManager.RenderLevel(entities);
+    
+    for (auto& entity : entities) {
+        if (auto player = std::dynamic_pointer_cast<Player>(entity)) {
+            RenderHud(player);
+        }
+    }
+}
+
 void GameManager::InitialSetup()
 {
+    mapManager.InitializeMap();
+
     entities.push_back(make_shared<Player>(2, 2));
     entities.push_back(make_shared<Enemy>(5, 5, 10, 10, 1, 0, 1, 'S', "Snake"));
 
@@ -68,7 +86,7 @@ void GameManager::GameLoop()
 
         system("cls");
 
-        mapManager.RenderLevel(entities);
+        RenderScene();
 
         HandleUserInput(&exitGame);
 

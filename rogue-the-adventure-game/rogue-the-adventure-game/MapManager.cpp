@@ -25,14 +25,37 @@ void MapManager::CheckCollisionsAndMove(std::shared_ptr<Player>& player, int x, 
     }
 }
 
+void MapManager::InitializeRoom(int height, int width) {
+    room.resize(height);
+    for (int i = 0; i < height; ++i) {
+        room[i].resize(width, '.');  // Inicializa el cuarto con '.' por defecto
+    }
+}
+
 void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
 {
-    CreateRoom(10, 10);
+    for (const auto& row : room) {
+        for (char cell : row) {
+            if (cell == '#') {
+                cHelper->ChangeColor(100);
+            }
+            else {
+                cHelper->ChangeColor(255);
+            }
+            printf("%c", cell);
+        }
+        std::cout << std::endl;
+    }
 
     for (const auto& entity : entities) {
         RenderElement(entity->GetPosX(), entity->GetPosY(), entity->GetSprite());
     }
     
+}
+
+void MapManager::InitializeMap()
+{
+    CreateRoom(20, 20);
 }
 
 char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY)
@@ -46,37 +69,25 @@ char MapManager::GetNextPosition(int posX, int posY, int movementX, int movement
     return nextPosition;
 }
 
-void MapManager::CreateRoom(int height, int width)
-{
+void MapManager::CreateRoom(int height, int width) {
+    InitializeRoom(height, width);
 
-    for (int i = 0; i < height; i++)
-    {
-
-        for (int j = 0; j < width; j++)
-        {
-
-            if ((i == 0) || (j == 0) || (i == height - 1) || (j == width - 1))
-            {
-                cHelper->ChangeColor(100);
-                printf("#");
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if ((i == 0) || (j == 0) || (i == height - 1) || (j == width - 1)) {
+                room[i][j] = '#';
             }
-            else
-            {
-                cHelper->ChangeColor(255);
-                printf(".");
+            else {
+                room[i][j] = '.';
             }
-
         }
-
-        std::cout << std::endl;
     }
 }
 
 void MapManager::RenderElement(int x, int y, char element)
 {
     cHelper->ChangeColor(50);
-    cHelper->SetCursorPosition(x, y);
-    std::cout << element;
+    cHelper->PrintElementOnPosition(x, y, element);
 }
 
 
