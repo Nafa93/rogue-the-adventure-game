@@ -1,24 +1,14 @@
 #pragma once
-class Player
+#include "Entity.h"
+
+class Player : public Entity
 {
 public:
-    int level;
-    int hitPoints;
-    int currentHitPoints;
-    int strength;
-    int currentStrength;
     int gold;
-    int armor;
     int experience;
     int currentExperience;
-    int posY;
-    int posX;
 
-    Player(int x, int y);
-
-    void Move(int x, int y);
-
-    int GetPosX() { return this->posX; }
-    int GetPosY() { return this->posY; }
+    Player(int x, int y)
+        : Entity(x, y, 100, 100, 10, 0, 1, '0', "Player"), gold(0), experience(0), currentExperience(0) {};
 };
 

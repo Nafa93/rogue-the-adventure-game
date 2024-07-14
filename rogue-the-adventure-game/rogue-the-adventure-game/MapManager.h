@@ -1,14 +1,17 @@
 #pragma once
 #include "Player.h"
 #include "ConsoleHelper.h"
+#include "Entity.h"
+#include <vector>
+#include <memory>
 
 class MapManager
 {
 public:
 	MapManager();
 
-	void CheckCollisionsAndMove(Player* player, int x, int y);
-	void RenderLevel(Player player);
+	void CheckCollisionsAndMove(std::shared_ptr<Player>& player, int x, int y);
+	void RenderLevel(std::vector<std::shared_ptr<Entity>>& entities);
 
 private:
 	ConsoleHelper* cHelper;

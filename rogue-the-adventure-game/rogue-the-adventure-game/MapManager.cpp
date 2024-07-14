@@ -4,12 +4,15 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include "Entity.h"
+#include <vector>
+#include <memory>
 
 MapManager::MapManager() {
     cHelper = ConsoleHelper::GetInstance();
 }
 
-void MapManager::CheckCollisionsAndMove(Player* player, int x, int y) 
+void MapManager::CheckCollisionsAndMove(std::shared_ptr<Player>& player, int x, int y)
 {
     char character = GetNextPosition(player->GetPosX(), player->GetPosY(), x, y);
 
@@ -22,10 +25,14 @@ void MapManager::CheckCollisionsAndMove(Player* player, int x, int y)
     }
 }
 
-void MapManager::RenderLevel(Player player)
+void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
 {
     CreateRoom(10, 10);
-    RenderElement(player.GetPosX(), player.GetPosY(), '0');
+
+    for (const auto& entity : entities) {
+        RenderElement(entity->GetPosX(), entity->GetPosY(), entity->GetSprite());
+    }
+    
 }
 
 char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY)

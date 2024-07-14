@@ -1,7 +1,11 @@
 #pragma once
 #include "MapManager.h"
-#include "Player.h"
 #include "ConsoleHelper.h"
+#include "Entity.h"
+#include <memory>
+#include <vector>
+
+using namespace std;
 
 class GameManager
 {
@@ -14,7 +18,7 @@ public:
 
 private:
 	MapManager mapManager;
-	Player player;
+	vector<shared_ptr<Entity>> entities;
 	ConsoleHelper* cHelper;
 
 	void HandleUserInput(bool* salida);

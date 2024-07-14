@@ -2,9 +2,11 @@
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include "Player.h"
+#include "Enemy.h"
+#include <memory>
 
-GameManager::GameManager() : 
-    player(2, 2), 
+GameManager::GameManager() :
     mapManager()
 {
 	exitGame = false;
@@ -16,40 +18,47 @@ void GameManager::StartGame() {
     GameLoop();
 }
 
-void GameManager::HandleUserInput(bool* salida)
+void GameManager::HandleUserInput(bool* exit)
 {
     if (_kbhit()) {
         char l = _getch();
         int ascii = (int)l;
 
-        switch (ascii)
-        {
-            // ESC
-        case 27:
-            *salida = true;
-            break;
-            // A
-        case 97:
-            mapManager.CheckCollisionsAndMove(&player, -1, 0);
-            break;
-            // D
-        case 100:
-            mapManager.CheckCollisionsAndMove(&player, 1, 0);
-            break;
-            // S
-        case 115:
-            mapManager.CheckCollisionsAndMove(&player, 0, 1);
-            break;
-            // W
-        case 119:
-            mapManager.CheckCollisionsAndMove(&player, 0, -1);
-            break;
+        for (auto& entity : entities) {
+            if (auto player = std::dynamic_pointer_cast<Player>(entity)) {
+                switch (ascii)
+                {
+                    // ESC
+                case 27:
+                    *exit = true;
+                    break;
+                    // A
+                case 97:
+                    mapManager.CheckCollisionsAndMove(player, -1, 0);
+                    break;
+                    // D
+                case 100:
+                    mapManager.CheckCollisionsAndMove(player, 1, 0);
+                    break;
+                    // S
+                case 115:
+                    mapManager.CheckCollisionsAndMove(player, 0, 1);
+                    break;
+                    // W
+                case 119:
+                    mapManager.CheckCollisionsAndMove(player, 0, -1);
+                    break;
+                }
+            }
         }
     }
 }
 
 void GameManager::InitialSetup()
 {
+    entities.push_back(make_shared<Player>(2, 2));
+    entities.push_back(make_shared<Enemy>(5, 5, 10, 10, 1, 0, 1, 'S', "Snake"));
+
     cHelper->HideCursor();
 }
 
@@ -59,7 +68,7 @@ void GameManager::GameLoop()
 
         system("cls");
 
-        mapManager.RenderLevel(player);
+        mapManager.RenderLevel(entities);
 
         HandleUserInput(&exitGame);
 
