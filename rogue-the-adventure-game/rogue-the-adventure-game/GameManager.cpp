@@ -87,9 +87,29 @@ void GameManager::GameLoop()
         system("cls");
 
         RenderScene();
+        
+        Update();
 
         HandleUserInput(&exitGame);
 
         Sleep(70);
+    }
+}
+
+void GameManager::Update()
+{
+    std::shared_ptr<Player> player = nullptr;
+
+    for (auto& entity : entities) {
+        if (auto playerPointer = std::dynamic_pointer_cast<Player>(entity)) {
+            player = playerPointer;
+            break;
+        }
+    }
+
+    for (auto& entity : entities) {
+        if (auto enemy = std::dynamic_pointer_cast<Enemy>(entity)) {
+            enemy->MoveOrAttack(player);
+        }
     }
 }

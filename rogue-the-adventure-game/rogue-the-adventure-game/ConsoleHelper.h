@@ -16,7 +16,7 @@ protected:
 public:
 
     ConsoleHelper(ConsoleHelper& other) = delete;
-
+ 
     void operator=(const ConsoleHelper&) = delete;
 
 	static ConsoleHelper* GetInstance();
