@@ -16,16 +16,17 @@ public:
 
 	void StartGame();
 
+
 private:
 	MapManager mapManager;
 	vector<shared_ptr<Entity>> entities;
 	ConsoleHelper* cHelper;
 
-	void HandleUserInput(bool* salida);
 	void RenderHud(std::shared_ptr<Player>& player);
 	void RenderScene();
 	void InitialSetup();
 	void GameLoop();
-	void Update();
+	void Update(bool playerUsedAction);
+	void HandleUserInput(bool* exit, bool* playerUsedAction);
 };
 

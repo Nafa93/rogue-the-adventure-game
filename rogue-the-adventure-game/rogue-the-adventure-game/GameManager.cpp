@@ -18,7 +18,7 @@ void GameManager::StartGame() {
     GameLoop();
 }
 
-void GameManager::HandleUserInput(bool* exit)
+void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
 {
     if (_kbhit()) {
         char l = _getch();
@@ -35,18 +35,22 @@ void GameManager::HandleUserInput(bool* exit)
                     // A
                 case 97:
                     mapManager.CheckCollisionsAndMove(player, -1, 0);
+                    *playerUsedAction = true;
                     break;
                     // D
                 case 100:
                     mapManager.CheckCollisionsAndMove(player, 1, 0);
+                    *playerUsedAction = true;
                     break;
                     // S
                 case 115:
                     mapManager.CheckCollisionsAndMove(player, 0, 1);
+                    *playerUsedAction = true;
                     break;
                     // W
                 case 119:
                     mapManager.CheckCollisionsAndMove(player, 0, -1);
+                    *playerUsedAction = true;
                     break;
                 }
             }
@@ -82,22 +86,28 @@ void GameManager::InitialSetup()
 
 void GameManager::GameLoop() 
 {
+    bool playerUsedAction = false;
+
     while (!exitGame) {
 
         system("cls");
 
         RenderScene();
         
-        Update();
+        Update(playerUsedAction);
 
-        HandleUserInput(&exitGame);
+        playerUsedAction = false;
+
+        HandleUserInput(&exitGame, &playerUsedAction);
 
         Sleep(70);
     }
 }
 
-void GameManager::Update()
+void GameManager::Update(bool playerUsedAction)
 {
+    if (!playerUsedAction) return;
+
     std::shared_ptr<Player> player = nullptr;
 
     for (auto& entity : entities) {
