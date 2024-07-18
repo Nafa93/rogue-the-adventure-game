@@ -24,6 +24,9 @@ void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
         char l = _getch();
         int ascii = (int)l;
 
+        int moveX = 0;
+        int moveY = 0;
+
         for (auto& entity : entities) {
             if (auto player = std::dynamic_pointer_cast<Player>(entity)) {
                 switch (ascii)
@@ -34,25 +37,27 @@ void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
                     break;
                     // A
                 case 97:
-                    mapManager.CheckCollisionsAndMove(player, -1, 0);
+                    moveX = -1;
                     *playerUsedAction = true;
                     break;
                     // D
                 case 100:
-                    mapManager.CheckCollisionsAndMove(player, 1, 0);
+                    moveX = 1;
                     *playerUsedAction = true;
                     break;
                     // S
                 case 115:
-                    mapManager.CheckCollisionsAndMove(player, 0, 1);
+                    moveY = 1;
                     *playerUsedAction = true;
                     break;
                     // W
                 case 119:
-                    mapManager.CheckCollisionsAndMove(player, 0, -1);
+                    moveY = -1;
                     *playerUsedAction = true;
                     break;
                 }
+
+                player->MoveOrAttack(entities, moveX, moveY, &mapManager);
             }
         }
     }
@@ -119,7 +124,13 @@ void GameManager::Update(bool playerUsedAction)
 
     for (auto& entity : entities) {
         if (auto enemy = std::dynamic_pointer_cast<Enemy>(entity)) {
-            enemy->MoveOrAttack(player);
+            if (enemy->IsAlive()) {
+                enemy->MoveOrAttack(entities, player->GetPosX(), player->GetPosY(), &mapManager);
+            }
         }
     }
+
+    entities.erase(std::remove_if(entities.begin(), entities.end(), [](const std::shared_ptr<Entity>& entity) {
+        return !entity->IsAlive();
+    }), entities.end());
 }

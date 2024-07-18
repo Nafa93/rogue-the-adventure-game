@@ -1,5 +1,9 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <memory>
+
+class MapManager;
 
 class Entity
 {
@@ -25,8 +29,24 @@ public:
         posY += y;
     }
 
+    virtual void MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x, int y, MapManager* mapManager) = 0;
+
     char GetSprite() { return sprite; }
     int GetPosX() { return posX; }
     int GetPosY() { return posY; }
-};
 
+    void Attack(Entity& target)
+    {
+        int damage = strength - target.armor;
+        if (damage < 0) damage = 0;
+        target.ReceiveDamage(damage);
+    }
+
+    void ReceiveDamage(int damage)
+    {
+        currentHitPoints -= damage;
+        if (currentHitPoints < 0) currentHitPoints = 0;
+    }
+
+    bool IsAlive() const { return currentHitPoints > 0; }
+};

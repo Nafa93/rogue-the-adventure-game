@@ -1,28 +1,16 @@
-#include "MapManager.h"
-#include "Player.h"
-#include "ConsoleHelper.h"
+#include <vector>
+#include <memory>
 #include <iostream>
 #include <Windows.h>
 #include <conio.h>
+#include "MapManager.h"
+#include "Player.h"
+#include "ConsoleHelper.h"
 #include "Entity.h"
-#include <vector>
-#include <memory>
+
 
 MapManager::MapManager() {
     cHelper = ConsoleHelper::GetInstance();
-}
-
-void MapManager::CheckCollisionsAndMove(std::shared_ptr<Player>& player, int x, int y)
-{
-    char character = GetNextPosition(player->GetPosX(), player->GetPosY(), x, y);
-
-    switch (character) {
-    case '.':
-        player->Move(x, y);
-        break;
-    default:
-        break;
-    }
 }
 
 void MapManager::InitializeRoom(int height, int width) {
