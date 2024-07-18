@@ -127,20 +127,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="ConsoleHelper.cpp" />
+    <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="ExecutionMeasurer.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RandomNumberGenerator.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="rogue-the-adventure-game.cpp" />
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Canvas.h" />
     <ClInclude Include="ConsoleHelper.h" />
+    <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="ExecutionMeasurer.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RandomNumberGenerator.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="rogue-the-adventure-game.rc" />
