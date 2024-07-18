@@ -7,7 +7,11 @@
 #include "Player.h"
 #include "ConsoleHelper.h"
 #include "Entity.h"
-
+#include "Coordinate.h"
+#include "Rectangle.h"
+#include "Tree.h"
+#include "Node.h"
+#include "Canvas.h"
 
 MapManager::MapManager() {
     cHelper = ConsoleHelper::GetInstance();
@@ -43,7 +47,24 @@ void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
 
 void MapManager::InitializeMap()
 {
-    CreateRoom(20, 20);
+    //CreateRoom(20, 20);
+
+    int height = 60;
+    int width = 180;
+
+    Tree tree(Node(RectangleShape(Coordinate(0, 0), height, width)));
+
+    tree.partition(&tree.root, 0, 3);
+
+    tree.generate_corridors(&tree.root);
+
+    Canvas canvas(height, width);
+
+    canvas.add_corridors(tree.corridors, '$');
+
+    canvas.add_rectangles(tree.rooms, '#');
+
+    room = canvas.data;
 }
 
 char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY)

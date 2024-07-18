@@ -22,8 +22,8 @@ void Tree::partition(Node* node, int depth, int max_depth) {
         int percent_height = node->rectangle.height * 20 / 100;
         int random_height = rng.generate(half_height - percent_height, half_height + percent_height);
 
-        Rectangle left_rectangle(node->rectangle.origin, random_height, node->rectangle.width);
-        Rectangle right_rectangle(Coordinate(node->rectangle.origin.x, node->rectangle.origin.y + random_height), node->rectangle.height - random_height, node->rectangle.width);
+        RectangleShape left_rectangle(node->rectangle.origin, random_height, node->rectangle.width);
+        RectangleShape right_rectangle(Coordinate(node->rectangle.origin.x, node->rectangle.origin.y + random_height), node->rectangle.height - random_height, node->rectangle.width);
 
         node->left = new Node(left_rectangle);
         node->right = new Node(right_rectangle);
@@ -36,8 +36,8 @@ void Tree::partition(Node* node, int depth, int max_depth) {
         int percent_width = node->rectangle.width * 20 / 100;
         int random_width = rng.generate(half_width - percent_width, half_width + percent_width);
 
-        Rectangle left_rectangle(node->rectangle.origin, node->rectangle.height, random_width);
-        Rectangle right_rectangle(Coordinate(node->rectangle.origin.x + random_width, node->rectangle.origin.y), node->rectangle.height, node->rectangle.width - random_width);
+        RectangleShape left_rectangle(node->rectangle.origin, node->rectangle.height, random_width);
+        RectangleShape right_rectangle(Coordinate(node->rectangle.origin.x + random_width, node->rectangle.origin.y), node->rectangle.height, node->rectangle.width - random_width);
 
         node->left = new Node(left_rectangle);
         node->right = new Node(right_rectangle);
@@ -60,7 +60,7 @@ void Tree::generate_room(Node* node) {
     int random_x = rng.generate(node->rectangle.origin.x + 1, node->rectangle.origin.x + node->rectangle.width - random_width - 1);
     int random_y = rng.generate(node->rectangle.origin.y + 1, node->rectangle.origin.y + node->rectangle.height - random_height - 1);
 
-    node->room = Rectangle(Coordinate(random_x, random_y), random_height, random_width);
+    node->room = RectangleShape(Coordinate(random_x, random_y), random_height, random_width);
 }
 
 Node* Tree::generate_corridor(Node* origin, Node* end)
@@ -119,12 +119,12 @@ void Tree::generate_vertical_corridor(Node* origin, Node* end)
     if (top_node_wall_x_start <= bottom_node_wall_x_start && top_node_wall_x_end >= bottom_node_wall_x_end) {
         int corridor_start = rng.generate(bottom_node_wall_x_start, bottom_node_wall_x_end);
 
-        corridors.push_back(Rectangle(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
+        corridors.push_back(RectangleShape(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
     }
     else if (bottom_node_wall_x_start <= top_node_wall_x_start && bottom_node_wall_x_end >= top_node_wall_x_end) {
         int corridor_start = rng.generate(top_node_wall_x_start, top_node_wall_x_end);
 
-        corridors.push_back(Rectangle(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
+        corridors.push_back(RectangleShape(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
     }
     else if (top_node_wall_x_start > bottom_node_wall_x_end || top_node_wall_x_end < bottom_node_wall_x_start) {
         vertical_z_shape_corridor(top_node, bottom_node);
@@ -132,12 +132,12 @@ void Tree::generate_vertical_corridor(Node* origin, Node* end)
     else if (top_node_wall_x_start < bottom_node_wall_x_start) {
         int corridor_start = rng.generate(bottom_node_wall_x_start, top_node_wall_x_end);
 
-        corridors.push_back(Rectangle(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
+        corridors.push_back(RectangleShape(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
     }
     else if (top_node_wall_x_start > bottom_node_wall_x_start) {
         int corridor_start = rng.generate(top_node_wall_x_start, bottom_node_wall_x_end);
 
-        corridors.push_back(Rectangle(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
+        corridors.push_back(RectangleShape(Coordinate(corridor_start, top_node_wall_y), corridor_height, 1));
     }
 }
 
@@ -174,11 +174,11 @@ void Tree::vertical_z_shape_corridor(Node* origin, Node* end)
     // Maybe create a z shape
     int first_section_height = corridor_height / 2;
     int second_section_height = corridor_height - first_section_height;
-    corridors.push_back(Rectangle(Coordinate(random_start, top_node_wall_y), first_section_height, 1));
-    corridors.push_back(Rectangle(Coordinate(random_end, bottom_node_wall_y - second_section_height), second_section_height, 1));
+    corridors.push_back(RectangleShape(Coordinate(random_start, top_node_wall_y), first_section_height, 1));
+    corridors.push_back(RectangleShape(Coordinate(random_end, bottom_node_wall_y - second_section_height), second_section_height, 1));
 
     int z_shape_start = min(random_start, random_end);
-    corridors.push_back(Rectangle(Coordinate(z_shape_start, bottom_node_wall_y - second_section_height), 1, abs(random_start - random_end) + 1));
+    corridors.push_back(RectangleShape(Coordinate(z_shape_start, bottom_node_wall_y - second_section_height), 1, abs(random_start - random_end) + 1));
 }
 
 void Tree::generate_horizontal_corridor(Node* origin, Node* end) {
@@ -210,12 +210,12 @@ void Tree::generate_horizontal_corridor(Node* origin, Node* end) {
     if (left_wall_start <= right_wall_start && left_wall_end >= right_wall_end) {
         int corridor_start = rng.generate(right_wall_start, right_wall_end);
 
-        corridors.push_back(Rectangle(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
+        corridors.push_back(RectangleShape(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
     }
     else if (right_wall_start <= left_wall_start && right_wall_end >= left_wall_end) {
         int corridor_start = rng.generate(left_wall_start, left_wall_end);
 
-        corridors.push_back(Rectangle(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
+        corridors.push_back(RectangleShape(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
     }
     else if (left_wall_start > right_wall_end || left_wall_end < right_wall_start) {
         horizontal_z_shape_corridor(left_node, right_node);
@@ -223,12 +223,12 @@ void Tree::generate_horizontal_corridor(Node* origin, Node* end) {
     else if (left_wall_start < right_wall_start) {
         int corridor_start = rng.generate(right_wall_start, left_wall_end);
 
-        corridors.push_back(Rectangle(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
+        corridors.push_back(RectangleShape(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
     }
     else if (left_wall_start > right_wall_start) {
         int corridor_start = rng.generate(left_wall_start, right_wall_end);
 
-        corridors.push_back(Rectangle(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
+        corridors.push_back(RectangleShape(Coordinate(left_wall_x, corridor_start), 1, corridor_width));
     }
 }
 
@@ -265,11 +265,11 @@ void Tree::horizontal_z_shape_corridor(Node* origin, Node* end)
     // Maybe create a z shape
     int first_section_width = corridor_width / 2;
     int second_section_width = corridor_width - first_section_width;
-    corridors.push_back(Rectangle(Coordinate(left_wall_x, random_start), 1, first_section_width));
-    corridors.push_back(Rectangle(Coordinate(right_wall_x - second_section_width, random_end), 1, second_section_width));
+    corridors.push_back(RectangleShape(Coordinate(left_wall_x, random_start), 1, first_section_width));
+    corridors.push_back(RectangleShape(Coordinate(right_wall_x - second_section_width, random_end), 1, second_section_width));
 
     int z_shape_start = min(random_start, random_end);
-    corridors.push_back(Rectangle(Coordinate(left_wall_x + second_section_width - 1, z_shape_start), abs(random_start - random_end) + 1, 1));
+    corridors.push_back(RectangleShape(Coordinate(left_wall_x + second_section_width - 1, z_shape_start), abs(random_start - random_end) + 1, 1));
 }
 
 Node* Tree::generate_corridors(Node* node) {

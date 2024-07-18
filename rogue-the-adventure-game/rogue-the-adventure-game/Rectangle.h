@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Coordinate.h"
+#include "RandomNumberGenerator.h"
 
-class Rectangle
+class RectangleShape
 {
 public:
-    Rectangle(Coordinate origin, int height, int width) : origin(origin), height(height), width(width) {};
+    RectangleShape(Coordinate origin, int height, int width) : origin(origin), height(height), width(width), rng(RandomNumberGenerator()) {};
     Coordinate origin;
     int height;
     int width;
@@ -13,4 +14,7 @@ public:
     Coordinate top_left_corner();
     Coordinate bottom_right_corner();
     Coordinate bottom_left_corner();
+    Coordinate get_random_coordinate();
+private:
+    RandomNumberGenerator rng;
 };

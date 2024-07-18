@@ -11,9 +11,9 @@ public:
     void partition(Node* node, int depth, int max_depth);
     Node root;
     Coordinate root_center;
-    vector<Rectangle> rooms;
-    vector<Rectangle> areas;
-    vector<Rectangle> corridors;
+    vector<RectangleShape> rooms;
+    vector<RectangleShape> areas;
+    vector<RectangleShape> corridors;
     vector<Node*> leaves;
     Node* generate_corridors(Node* node);
 

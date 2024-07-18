@@ -16,7 +16,7 @@ void Canvas::draw()
     }
 }
 
-void Canvas::add_rectangles(vector<Rectangle> rectangles, char character)
+void Canvas::add_rectangles(vector<RectangleShape> rectangles, char character)
 {
     for (int i = 0; i < rectangles.size(); i++)
     {
@@ -30,14 +30,14 @@ void Canvas::add_rectangles(vector<Rectangle> rectangles, char character)
                     }
                 }
                 else {
-                    data[j][k] = ' ';
+                    data[j][k] = '.';
                 }
             }
         }
     }
 }
 
-void Canvas::add_corridors(vector<Rectangle> rectangles, char character)
+void Canvas::add_corridors(vector<RectangleShape> rectangles, char character)
 {
     for (int i = 0; i < rectangles.size(); i++)
     {
