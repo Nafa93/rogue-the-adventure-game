@@ -11,19 +11,25 @@ void Consumable::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, in
 
 shared_ptr<Consumable> Consumable::potion(int x, int y)
 {
-    auto consumePotion = [](Player* player) {
+    auto consume = [](Player* player) {
         player->currentHitPoints = min(player->hitPoints, player->currentHitPoints + 50);
     };
 
-    return make_shared<Consumable>(x, y, 50, 0, 0, 0, 0, 'P', "Potion", consumePotion);
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'P', "Potion", consume);
 }
 
-//shared_ptr<Consumable> Consumable::armor(int x, int y)
-//{
-//    return make_shared<Consumable>(x, y, 0, 0, 0, 10, 0, 'A', "Armor boost");
-//}
-//
-//shared_ptr<Consumable> Consumable::strength(int x, int y)
-//{
-//    return make_shared<Consumable>(x, y, 0, 0, 10, 0, 0, 'S', "Strength boost");
-//}
+shared_ptr<Consumable> Consumable::armor(int x, int y)
+{
+    auto consume = [](Player* player) {
+        player->armor += 10;
+    };
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'D', "Defense boost", consume);
+}
+
+shared_ptr<Consumable> Consumable::strength(int x, int y)
+{
+    auto consume = [](Player* player) {
+        player->strength += 10;
+    };
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'A', "Attack boost", consume);
+}

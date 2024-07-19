@@ -53,15 +53,15 @@ bool Enemy::CheckIfPlayerIsNear(int playerPosX, int playerPosY)
 
 shared_ptr<Enemy> Enemy::snake(int x, int y)
 {
-    return make_shared<Enemy>(x, y, 10, 10, 1, 0, 1, 'S', "Snake");
+    return make_shared<Enemy>(x, y, 15, 15, 1, 0, 1, 'S', "Snake");
 }
 
 shared_ptr<Enemy> Enemy::troll(int x, int y)
 {
-    return make_shared<Enemy>(x, y, 20, 10, 2, 2, 1, 'T', "Troll");
+    return make_shared<Enemy>(x, y, 50, 50, 5, 5, 1, 'T', "Troll");
 }
 
 shared_ptr<Enemy> Enemy::zombie(int x, int y)
 {
-    return make_shared<Enemy>(x, y, 10, 10, 3, 1, 1, 'Z', "Zombie");
+    return make_shared<Enemy>(x, y, 30, 30, 10, 2, 1, 'Z', "Zombie");
 }

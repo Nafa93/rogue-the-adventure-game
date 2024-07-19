@@ -21,7 +21,12 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
         }
 
         if (auto consumable = dynamic_pointer_cast<Consumable>(entity)) {
-            consumable->consume(this);
+            if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y) {
+                consumable->currentHitPoints = 0;
+                consumable->consume(this);
+
+                break;
+            }
         }
     }
 
