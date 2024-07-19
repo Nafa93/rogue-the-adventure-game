@@ -7,45 +7,41 @@ using namespace std;
 
 void Enemy::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int playerX, int playerY, MapManager* mapManager)
 {
-	int normalizedDirectionValue; // 1 or -1
+    int normalizedDirectionX = 0;
+    int normalizedDirectionY = 0;
+    int nextPosX = posX, nextPosY = posY;
 	bool playerIsNear = CheckIfPlayerIsNear(playerX, playerY);
+    bool playerNextTile = false;
 
 	if (playerIsNear) {
         if (playerX != posX) {
-            normalizedDirectionValue = abs(posX - playerX) / (-1 * (posX - playerX));
-            char nextTile = mapManager->GetNextPosition(posX, posY, normalizedDirectionValue, 0);
-            if (nextTile == '.') {
-                Move(normalizedDirectionValue, 0);
-            }
-            else if (nextTile == '0') {
-                for (auto& entity : entities) {
-                    if (entity->GetPosX() == posX + normalizedDirectionValue && entity->GetPosY() == posY) {
-                        if (entity->GetSprite() == '0') {
-                            Attack(*entity);
-                            break;
-                        }
-                    }
-                }
-            }
+            normalizedDirectionX = (playerX - posX) / std::abs(playerX - posX);
         }
         else if (playerY != posY) {
-            normalizedDirectionValue = abs(posY - playerY) / (-1 * (posY - playerY));
-            char nextTile = mapManager->GetNextPosition(posX, posY, 0, normalizedDirectionValue);
-            if (nextTile == '.') {
-                Move(0, normalizedDirectionValue);
-            }
-            else if (nextTile == '0') {
-                for (auto& entity : entities) {
-                    if (entity->GetPosX() == posX && entity->GetPosY() == posY + normalizedDirectionValue) {
-                        if (entity->GetSprite() == '0') {
-                            Attack(*entity);
-                            break;
-                        }
-                    }
+            normalizedDirectionY = (playerY - posY) / std::abs(playerY - posY);
+        }
+
+        nextPosX = posX + normalizedDirectionX;
+        nextPosY = posY + normalizedDirectionY;
+
+        if (nextPosX == playerX && nextPosY == playerY) {
+            playerNextTile = true;
+            for (auto& entity : entities) {
+                if (entity->GetSprite() == '0') {
+                    Attack(*entity);
+                    break;
                 }
             }
         }
 	}
+
+    if (!playerNextTile) {
+        char nextTile = mapManager->GetNextPosition(posX, posY, normalizedDirectionX, normalizedDirectionY);
+
+        if (nextTile == '.' || nextTile == '$$') {
+            Move(normalizedDirectionX, normalizedDirectionY);
+        }
+    }
 }
 
 bool Enemy::CheckIfPlayerIsNear(int playerPosX, int playerPosY)

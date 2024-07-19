@@ -72,7 +72,7 @@ void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
 
 void GameManager::RenderHud(std::shared_ptr<Player>& player)
 {
-    printf("Level: %d Hits:%d(%d) Str:%d Gold:%d Armor:%d Exp:%d/%d", player->level, player->currentHitPoints, player->hitPoints, player->strength, player->gold, player->armor, player->currentExperience, player->experience);
+    printf("Hits:%d(%d) Str:%d Armor:%d", player->currentHitPoints, player->hitPoints, player->strength, player->armor);
 }
 
 void GameManager::InitializeStaticMap(ScreenBuffer& screen) {
