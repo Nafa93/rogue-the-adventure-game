@@ -35,7 +35,7 @@ void MapManager::RenderDynamicElements(ScreenBuffer& screen, const std::vector<s
 
 void MapManager::InitializeMap()
 {
-    int height = 50;
+    int height = 45;
     int width = 180;
 
     Tree tree(Node(RectangleShape(Coordinate(0, 0), height, width)));

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void Enemy::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int playerX, int playerY, MapManager* mapManager)
+void Enemy::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int playerX, int playerY, MapManager* mapManager, MessageManager* messageManager)
 {
     int normalizedDirectionX = 0;
     int normalizedDirectionY = 0;
@@ -28,7 +28,7 @@ void Enemy::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int pla
             playerNextTile = true;
             for (auto& entity : entities) {
                 if (entity->GetSprite() == '0') {
-                    Attack(*entity);
+                    Attack(*entity, messageManager);
                     break;
                 }
             }

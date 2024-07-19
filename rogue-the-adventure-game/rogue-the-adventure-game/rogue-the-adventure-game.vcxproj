@@ -131,9 +131,11 @@
     <ClCompile Include="ConsoleHelper.cpp" />
     <ClCompile Include="Coordinate.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExecutionMeasurer.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
@@ -147,9 +149,11 @@
     <ClInclude Include="ConsoleHelper.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="ExecutionMeasurer.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="MessageManager.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RandomNumberGenerator.h" />

@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "MessageManager.h"
 
 class MapManager;
 
@@ -29,14 +30,16 @@ public:
         posY += y;
     }
 
-    virtual void MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x, int y, MapManager* mapManager) = 0;
+    virtual void MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x, int y, MapManager* mapManager, MessageManager* messageManager) = 0;
 
     char GetSprite() { return sprite; }
     int GetPosX() { return posX; }
     int GetPosY() { return posY; }
+    std::string GetName() { return name; }
 
-    void Attack(Entity& target)
+    void Attack(Entity& target, MessageManager* messageManager)
     {
+        messageManager->AddMessage(name + " ataco a " + target.GetName());
         int damage = strength - target.armor;
         if (damage < 0) damage = 0;
         target.ReceiveDamage(damage);

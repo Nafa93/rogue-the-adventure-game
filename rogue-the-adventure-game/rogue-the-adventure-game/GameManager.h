@@ -2,6 +2,7 @@
 #include "MapManager.h"
 #include "ConsoleHelper.h"
 #include "Entity.h"
+#include "MessageManager.h"
 #include <memory>
 #include <vector>
 
@@ -21,6 +22,7 @@ private:
 	MapManager mapManager;
 	vector<shared_ptr<Entity>> entities;
 	ConsoleHelper* cHelper;
+	MessageManager messageManager;
 
 	void RenderHud(std::shared_ptr<Player>& player);
 	void InitializeStaticMap(ScreenBuffer& screen);

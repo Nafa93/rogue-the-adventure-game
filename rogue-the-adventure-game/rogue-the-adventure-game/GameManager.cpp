@@ -64,7 +64,7 @@ void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
                     break;
                 }
 
-                player->MoveOrAttack(entities, moveX, moveY, &mapManager);
+                player->MoveOrAttack(entities, moveX, moveY, &mapManager, &messageManager);
             }
         }
     }
@@ -81,8 +81,11 @@ void GameManager::InitializeStaticMap(ScreenBuffer& screen) {
 
 void GameManager::RenderScene(ScreenBuffer& screen)
 {
-    mapManager.RenderDynamicElements(screen, entities);
     
+    messageManager.RenderMessages();
+
+    mapManager.RenderDynamicElements(screen, entities);
+
     for (auto& entity : entities) {
         if (auto player = std::dynamic_pointer_cast<Player>(entity)) {
             RenderHud(player);
@@ -135,6 +138,8 @@ void GameManager::GameLoop()
         HandleUserInput(&exitGame, &playerUsedAction);
 
         Sleep(70);
+
+        messageManager.Update();
     }
 }
 
@@ -154,7 +159,7 @@ void GameManager::Update(bool playerUsedAction)
     for (auto& entity : entities) {
         if (auto enemy = std::dynamic_pointer_cast<Enemy>(entity)) {
             if (enemy->IsAlive()) {
-                enemy->MoveOrAttack(entities, player->GetPosX(), player->GetPosY(), &mapManager);
+                enemy->MoveOrAttack(entities, player->GetPosX(), player->GetPosY(), &mapManager, &messageManager);
             }
         }
     }
