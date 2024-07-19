@@ -91,10 +91,20 @@ void GameManager::InitialSetup()
     mapManager.InitializeMap();
 
     Coordinate playerOrigin = mapManager.mainRoom.get_random_coordinate();
-    Coordinate enemyOrigin = mapManager.GetRandomRoom().get_random_coordinate();
 
     entities.push_back(make_shared<Player>(playerOrigin.x, playerOrigin.y));
-    entities.push_back(make_shared<Enemy>(enemyOrigin.x, enemyOrigin.y, 10, 10, 1, 0, 1, 'S', "Snake"));
+
+    Coordinate snakeOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+    entities.push_back(Enemy::snake(snakeOrigin.x, snakeOrigin.y));
+
+    Coordinate trollOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+    entities.push_back(Enemy::troll(trollOrigin.x, trollOrigin.y));
+
+    Coordinate zombieOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+    entities.push_back(Enemy::zombie(zombieOrigin.x, zombieOrigin.y));
 
     cHelper->HideCursor();
 }

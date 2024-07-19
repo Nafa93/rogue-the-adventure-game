@@ -1,6 +1,9 @@
 #include <cmath>
+#include <vector>
 #include "Enemy.h"
 #include "MapManager.h"
+
+using namespace std;
 
 void Enemy::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int playerX, int playerY, MapManager* mapManager)
 {
@@ -50,4 +53,19 @@ bool Enemy::CheckIfPlayerIsNear(int playerPosX, int playerPosY)
 	const int SENSE_AREA_DIAMETER = 3;
 
 	return abs(playerPosX - posX) <= SENSE_AREA_DIAMETER && abs(playerPosY - posY) <= SENSE_AREA_DIAMETER;
+}
+
+shared_ptr<Enemy> Enemy::snake(int x, int y)
+{
+    return make_shared<Enemy>(x, y, 10, 10, 1, 0, 1, 'S', "Snake");
+}
+
+shared_ptr<Enemy> Enemy::troll(int x, int y)
+{
+    return make_shared<Enemy>(x, y, 20, 10, 2, 2, 1, 'T', "Troll");
+}
+
+shared_ptr<Enemy> Enemy::zombie(int x, int y)
+{
+    return make_shared<Enemy>(x, y, 10, 10, 3, 1, 1, 'Z', "Zombie");
 }

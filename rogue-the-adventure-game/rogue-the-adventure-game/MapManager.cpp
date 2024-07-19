@@ -80,7 +80,7 @@ char MapManager::GetNextPosition(int posX, int posY, int movementX, int movement
 
 RectangleShape MapManager::GetRandomRoom()
 {
-    int random_index = rng.generate(0, otherRooms.size());
+    int random_index = rng.generate(0, otherRooms.size() - 1);
 
     return otherRooms[random_index];
 }
