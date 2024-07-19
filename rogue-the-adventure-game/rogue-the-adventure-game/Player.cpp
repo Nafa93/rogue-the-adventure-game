@@ -9,6 +9,9 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
     case '.':
         Move(x, y);
         break;
+    case '$':
+        Move(x, y);
+        break;
     default:
         for (auto& entity : entities) {
             if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y) {
