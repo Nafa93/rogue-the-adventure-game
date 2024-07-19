@@ -28,6 +28,12 @@ private:
 	void InitializeStaticMap(ScreenBuffer& screen);
 	void RenderScene(ScreenBuffer& screen);
 	void InitialSetup();
+	void addZombies(int quantity);
+	void addTrolls(int quantity);
+	void addSnakes(int quantity);
+	void addPotions(int quantity);
+	void addDefenseBoosts(int quantity);
+	void addAttackBoosts(int quantity);
 	void GameLoop();
 	void Update(bool playerUsedAction);
 	void HandleUserInput(bool* exit, bool* playerUsedAction);

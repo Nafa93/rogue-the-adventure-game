@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "MapManager.h"
+#include "Enemy.h"
+#include "Consumable.h"
 
 void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x, int y, MapManager* mapManager, MessageManager* messageManager)
 {
@@ -7,11 +9,22 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
     bool entityFound = false;
 
     for (auto& entity : entities) {
-        if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y && entity->IsAlive()) {
-            entityFound = true;
-            Attack(*entity, messageManager);
+        if (auto enemy = dynamic_pointer_cast<Enemy>(entity)) {
+            if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y && entity->IsAlive()) {
+                entityFound = true;
+                Attack(*entity, messageManager);
 
-            break;
+                break;
+            }
+        }
+
+        if (auto consumable = dynamic_pointer_cast<Consumable>(entity)) {
+            if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y) {
+                consumable->currentHitPoints = 0;
+                consumable->consume(this);
+
+                break;
+            }
         }
     }
 

@@ -4,6 +4,7 @@
 #include <conio.h>
 #include "Player.h"
 #include "Enemy.h"
+#include "Consumable.h"
 #include <memory>
 #include <iterator>
 #include <algorithm>
@@ -101,22 +102,77 @@ void GameManager::InitialSetup()
 
     entities.push_back(make_shared<Player>(playerOrigin.x, playerOrigin.y));
 
-    Coordinate snakeOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+    addSnakes(10);
 
-    entities.push_back(Enemy::snake(snakeOrigin.x, snakeOrigin.y));
+    addTrolls(5);
 
-    Coordinate trollOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+    addZombies(3);
 
-    entities.push_back(Enemy::troll(trollOrigin.x, trollOrigin.y));
+    addPotions(3);
 
-    Coordinate zombieOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+    addAttackBoosts(1);
 
-    entities.push_back(Enemy::zombie(zombieOrigin.x, zombieOrigin.y));
+    addDefenseBoosts(1);
 
     cHelper->HideCursor();
 }
 
-void GameManager::GameLoop() 
+void GameManager::addZombies(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+        Coordinate zombieOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Enemy::zombie(zombieOrigin.x, zombieOrigin.y));
+    }
+}
+
+void GameManager::addTrolls(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+        Coordinate trollOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Enemy::troll(trollOrigin.x, trollOrigin.y));
+    }
+}
+
+void GameManager::addSnakes(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+
+        Coordinate snakeOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Enemy::snake(snakeOrigin.x, snakeOrigin.y));
+    }
+}
+
+void GameManager::addPotions(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+        Coordinate potionOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Consumable::potion(potionOrigin.x, potionOrigin.y));
+    }
+}
+
+void GameManager::addDefenseBoosts(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+        Coordinate defenseBoostOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Consumable::armor(defenseBoostOrigin.x, defenseBoostOrigin.y));
+    }
+}
+
+void GameManager::addAttackBoosts(int quantity)
+{
+    for (int i = 0; i < quantity; i++) {
+        Coordinate attackBoostOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+        entities.push_back(Consumable::strength(attackBoostOrigin.x, attackBoostOrigin.y));
+    }
+}
+
+void GameManager::GameLoop()
 {
     bool playerUsedAction = false;
     ScreenBuffer screen(180, 50);

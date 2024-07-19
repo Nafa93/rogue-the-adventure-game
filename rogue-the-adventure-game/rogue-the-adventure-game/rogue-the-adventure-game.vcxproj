@@ -134,6 +134,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ExecutionMeasurer.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ExecutionMeasurer.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Consumable.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="Node.h" />
