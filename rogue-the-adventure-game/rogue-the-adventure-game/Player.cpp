@@ -11,20 +11,17 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
     bool entityFound = false;
 
     for (auto& entity : entities) {
-        for (auto& entity : entities) {
-            if (auto enemy = dynamic_pointer_cast<Enemy>(entity)) {
+        if (auto enemy = dynamic_pointer_cast<Enemy>(entity)) {
+            if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y && entity->IsAlive()) {
                 entityFound = true;
-                if (enemy->GetPosX() == posX + x && enemy->GetPosY() == posY + y) {
-                    if (enemy->GetSprite() != '.') {
-                        Attack(*enemy);
-                        break;
-                    }
-                }
-            }
+                Attack(*entity);
 
-            if (auto consumable = dynamic_pointer_cast<Consumable>(entity)) {
-                consumable->consume(this);
+                break;
             }
+        }
+
+        if (auto consumable = dynamic_pointer_cast<Consumable>(entity)) {
+            consumable->consume(this);
         }
     }
 
