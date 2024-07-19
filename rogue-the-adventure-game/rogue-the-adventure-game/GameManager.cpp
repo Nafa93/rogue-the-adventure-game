@@ -5,6 +5,13 @@
 #include "Player.h"
 #include "Enemy.h"
 #include <memory>
+#include <iterator>
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <vector>
+
+using namespace std;
 
 GameManager::GameManager() :
     mapManager()
@@ -83,8 +90,11 @@ void GameManager::InitialSetup()
 {
     mapManager.InitializeMap();
 
-    entities.push_back(make_shared<Player>(2, 2));
-    entities.push_back(make_shared<Enemy>(5, 5, 10, 10, 1, 0, 1, 'S', "Snake"));
+    Coordinate playerOrigin = mapManager.mainRoom.get_random_coordinate();
+    Coordinate enemyOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+    entities.push_back(make_shared<Player>(playerOrigin.x, playerOrigin.y));
+    entities.push_back(make_shared<Enemy>(enemyOrigin.x, enemyOrigin.y, 10, 10, 1, 0, 1, 'S', "Snake"));
 
     cHelper->HideCursor();
 }

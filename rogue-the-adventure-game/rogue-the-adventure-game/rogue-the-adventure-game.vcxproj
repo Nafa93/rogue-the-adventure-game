@@ -137,7 +137,7 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RandomNumberGenerator.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="RectangleShape.cpp" />
     <ClCompile Include="rogue-the-adventure-game.cpp" />
     <ClCompile Include="Tree.cpp" />
   </ItemGroup>
@@ -152,7 +152,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RandomNumberGenerator.h" />
-    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="RectangleShape.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tree.h" />
   </ItemGroup>

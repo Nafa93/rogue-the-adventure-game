@@ -1,4 +1,4 @@
-#include "Rectangle.h"
+#include "RectangleShape.h"
 
 Coordinate RectangleShape::top_right_corner() {
 	return Coordinate(origin.x + width - 1, origin.y);

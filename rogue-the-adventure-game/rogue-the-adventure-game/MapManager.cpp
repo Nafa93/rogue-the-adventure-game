@@ -8,25 +8,20 @@
 #include "ConsoleHelper.h"
 #include "Entity.h"
 #include "Coordinate.h"
-#include "Rectangle.h"
+#include "RectangleShape.h"
 #include "Tree.h"
 #include "Node.h"
 #include "Canvas.h"
+
+using namespace std;
 
 MapManager::MapManager() {
     cHelper = ConsoleHelper::GetInstance();
 }
 
-void MapManager::InitializeRoom(int height, int width) {
-    room.resize(height);
-    for (int i = 0; i < height; ++i) {
-        room[i].resize(width, '.');  // Inicializa el cuarto con '.' por defecto
-    }
-}
-
-void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
+void MapManager::RenderLevel(vector<shared_ptr<Entity>>& entities)
 {
-    for (const auto& row : room) {
+    for (const auto& row : data) {
         for (char cell : row) {
             if (cell == '#') {
                 cHelper->ChangeColor(100);
@@ -36,7 +31,8 @@ void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
             }
             printf("%c", cell);
         }
-        std::cout << std::endl;
+        
+        cout << endl;
     }
 
     for (const auto& entity : entities) {
@@ -47,8 +43,6 @@ void MapManager::RenderLevel(std::vector<std::shared_ptr<Entity>>& entities)
 
 void MapManager::InitializeMap()
 {
-    //CreateRoom(20, 20);
-
     int height = 60;
     int width = 180;
 
@@ -64,7 +58,13 @@ void MapManager::InitializeMap()
 
     canvas.add_rectangles(tree.rooms, '#');
 
-    room = canvas.data;
+    rooms = tree.rooms;
+
+    mainRoom = rooms[0];
+
+    otherRooms = vector<RectangleShape>(rooms.begin() + 1, rooms.end());
+
+    data = canvas.data;
 }
 
 char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY)
@@ -78,19 +78,11 @@ char MapManager::GetNextPosition(int posX, int posY, int movementX, int movement
     return nextPosition;
 }
 
-void MapManager::CreateRoom(int height, int width) {
-    InitializeRoom(height, width);
+RectangleShape MapManager::GetRandomRoom()
+{
+    int random_index = rng.generate(0, otherRooms.size());
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            if ((i == 0) || (j == 0) || (i == height - 1) || (j == width - 1)) {
-                room[i][j] = '#';
-            }
-            else {
-                room[i][j] = '.';
-            }
-        }
-    }
+    return otherRooms[random_index];
 }
 
 void MapManager::RenderElement(int x, int y, char element)
@@ -98,5 +90,3 @@ void MapManager::RenderElement(int x, int y, char element)
     cHelper->ChangeColor(50);
     cHelper->PrintElementOnPosition(x, y, element);
 }
-
-

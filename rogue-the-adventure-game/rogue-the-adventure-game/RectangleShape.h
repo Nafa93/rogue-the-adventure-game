@@ -7,6 +7,7 @@ class RectangleShape
 {
 public:
     RectangleShape(Coordinate origin, int height, int width) : origin(origin), height(height), width(width), rng(RandomNumberGenerator()) {};
+    RectangleShape() : origin(Coordinate(0, 0)), height(0), width(0), rng(RandomNumberGenerator()) {};
     Coordinate origin;
     int height;
     int width;
