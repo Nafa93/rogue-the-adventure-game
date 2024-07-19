@@ -190,7 +190,7 @@ void GameManager::GameLoop()
 
         HandleUserInput(&exitGame, &playerUsedAction);
 
-        Sleep(70);
+        Sleep(30);
     }
 }
 

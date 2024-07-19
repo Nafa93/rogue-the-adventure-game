@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <Windows.h>
+#include "ConsoleHelper.h"
 
 class ScreenBuffer {
 public:
@@ -19,4 +20,5 @@ private:
     int width, height;
     std::vector<char> dynamicBuffer;
     std::vector<char> staticBuffer;
+    ConsoleHelper* cHelper;
 };
