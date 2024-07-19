@@ -15,15 +15,15 @@ shared_ptr<Consumable> Consumable::potion(int x, int y)
         player->currentHitPoints = min(player->hitPoints, player->currentHitPoints + 50);
     };
 
-    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'P', "Potion", consume);
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'P', "Pocion", consume);
 }
 
 shared_ptr<Consumable> Consumable::armor(int x, int y)
 {
     auto consume = [](Player* player) {
-        player->armor += 10;
+        player->armor += 1;
     };
-    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'D', "Defense boost", consume);
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'D', "Mejora de armadura", consume);
 }
 
 shared_ptr<Consumable> Consumable::strength(int x, int y)
@@ -31,5 +31,5 @@ shared_ptr<Consumable> Consumable::strength(int x, int y)
     auto consume = [](Player* player) {
         player->strength += 10;
     };
-    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'A', "Attack boost", consume);
+    return make_shared<Consumable>(x, y, 1, 1, 0, 0, 0, 'A', "Mejora de ataque", consume);
 }

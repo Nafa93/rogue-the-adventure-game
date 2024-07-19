@@ -5,7 +5,7 @@
 int RandomNumberGenerator::generate(int lower_bound, int upper_bound)
 {
 	if (lower_bound > upper_bound) {
-		return upper_bound;
+		return lower_bound;
 	}
 
 	random_device rd;

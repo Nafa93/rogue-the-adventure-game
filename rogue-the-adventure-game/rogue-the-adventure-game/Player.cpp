@@ -22,7 +22,7 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
             if (entity->GetPosX() == posX + x && entity->GetPosY() == posY + y) {
                 consumable->currentHitPoints = 0;
                 consumable->consume(this);
-
+                messageManager->AddMessage("Se ha utilizado " + consumable->GetName());
                 break;
             }
         }
