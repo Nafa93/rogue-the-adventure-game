@@ -23,7 +23,8 @@ private:
 	ConsoleHelper* cHelper;
 
 	void RenderHud(std::shared_ptr<Player>& player);
-	void RenderScene();
+	void InitializeStaticMap(ScreenBuffer& screen);
+	void RenderScene(ScreenBuffer& screen);
 	void InitialSetup();
 	void GameLoop();
 	void Update(bool playerUsedAction);

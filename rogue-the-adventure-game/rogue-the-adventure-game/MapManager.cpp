@@ -19,31 +19,23 @@ MapManager::MapManager() {
     cHelper = ConsoleHelper::GetInstance();
 }
 
-void MapManager::RenderLevel(vector<shared_ptr<Entity>>& entities)
-{
-    for (const auto& row : data) {
-        for (char cell : row) {
-            if (cell == '#') {
-                cHelper->ChangeColor(100);
-            }
-            else {
-                cHelper->ChangeColor(255);
-            }
-            printf("%c", cell);
+void MapManager::RenderStaticMap(ScreenBuffer& screen) {
+    for (int y = 0; y < data.size(); ++y) {
+        for (int x = 0; x < data[y].size(); ++x) {
+            screen.DrawStaticBuffer(x, y, data[y][x]);
         }
-        
-        cout << endl;
     }
+}
 
+void MapManager::RenderDynamicElements(ScreenBuffer& screen, const std::vector<std::shared_ptr<Entity>>& entities) {
     for (const auto& entity : entities) {
-        RenderElement(entity->GetPosX(), entity->GetPosY(), entity->GetSprite());
+        RenderElement(screen, entity->GetPosX(), entity->GetPosY(), entity->GetSprite());
     }
-    
 }
 
 void MapManager::InitializeMap()
 {
-    int height = 60;
+    int height = 50;
     int width = 180;
 
     Tree tree(Node(RectangleShape(Coordinate(0, 0), height, width)));
@@ -67,15 +59,8 @@ void MapManager::InitializeMap()
     data = canvas.data;
 }
 
-char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY)
-{
-    char nextPosition;
-
-    cHelper->SetCursorPosition(posX + movementX, posY + movementY);
-    nextPosition = cHelper->CharRead();
-    cHelper->SetCursorPosition(posX, posY);
-
-    return nextPosition;
+char MapManager::GetNextPosition(int posX, int posY, int movementX, int movementY) {
+    return data[posY + movementY][posX + movementX];
 }
 
 RectangleShape MapManager::GetRandomRoom()
@@ -85,8 +70,6 @@ RectangleShape MapManager::GetRandomRoom()
     return otherRooms[random_index];
 }
 
-void MapManager::RenderElement(int x, int y, char element)
-{
-    cHelper->ChangeColor(50);
-    cHelper->PrintElementOnPosition(x, y, element);
+void MapManager::RenderElement(ScreenBuffer& screen, int x, int y, char element) {
+    screen.Draw(x, y, element);
 }

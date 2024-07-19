@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "ConsoleHelper.h"
 #include "RectangleShape.h"
+#include "ScreenBuffer.h"
 #include <vector>
 #include <memory>
 
@@ -14,7 +15,8 @@ class MapManager
 public:
 	MapManager();
 
-	void RenderLevel(vector<shared_ptr<Entity>>& entities);
+	void RenderStaticMap(ScreenBuffer& screen);
+	void RenderDynamicElements(ScreenBuffer& screen, const std::vector<std::shared_ptr<Entity>>& entities);
 	void InitializeMap();
 	char GetNextPosition(int posX, int posY, int movementX, int movementY);
 	RectangleShape mainRoom;
@@ -27,6 +29,6 @@ private:
 	ConsoleHelper* cHelper;
 	vector<vector<char>> data;
 
-	void RenderElement(int x, int y, char element);
+	void RenderElement(ScreenBuffer& screen, int x, int y, char element);
 };
 

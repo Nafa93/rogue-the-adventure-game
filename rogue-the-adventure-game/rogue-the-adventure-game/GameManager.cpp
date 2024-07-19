@@ -73,12 +73,16 @@ void GameManager::HandleUserInput(bool* exit, bool* playerUsedAction)
 
 void GameManager::RenderHud(std::shared_ptr<Player>& player)
 {
-    printf("Level: %d Hits:%d(%d) Str:%d Gold:%d Armor:%d Exp:%d/%d", player->level, player->currentHitPoints, player->hitPoints, player->strength, player->gold, player->armor, player->currentExperience, player->experience);
+    printf("Hits:%d(%d) Str:%d Armor:%d", player->currentHitPoints, player->hitPoints, player->strength, player->armor);
 }
 
-void GameManager::RenderScene() 
+void GameManager::InitializeStaticMap(ScreenBuffer& screen) {
+    mapManager.RenderStaticMap(screen);
+}
+
+void GameManager::RenderScene(ScreenBuffer& screen)
 {
-    mapManager.RenderLevel(entities);
+    mapManager.RenderDynamicElements(screen, entities);
     
     for (auto& entity : entities) {
         if (auto player = std::dynamic_pointer_cast<Player>(entity)) {
@@ -117,12 +121,17 @@ void GameManager::InitialSetup()
 void GameManager::GameLoop() 
 {
     bool playerUsedAction = false;
+    ScreenBuffer screen(180, 50);
+
+    InitializeStaticMap(screen);
 
     while (!exitGame) {
 
-        system("cls");
+        screen.ResetDynamicBuffer();
 
-        RenderScene();
+        RenderScene(screen);
+
+        screen.Render();
         
         Update(playerUsedAction);
 

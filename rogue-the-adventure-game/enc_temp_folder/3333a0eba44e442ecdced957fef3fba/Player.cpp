@@ -13,7 +13,6 @@ void Player::MoveOrAttack(std::vector<std::shared_ptr<Entity>>& entities, int x,
     for (auto& entity : entities) {
         for (auto& entity : entities) {
             if (auto enemy = dynamic_pointer_cast<Enemy>(entity)) {
-                entityFound = true;
                 if (enemy->GetPosX() == posX + x && enemy->GetPosY() == posY + y) {
                     if (enemy->GetSprite() != '.') {
                         Attack(*enemy);
