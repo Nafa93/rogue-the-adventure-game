@@ -133,6 +133,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ExecutionMeasurer.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="ExecutionMeasurer.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Consumable.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />

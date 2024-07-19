@@ -4,6 +4,7 @@
 #include <conio.h>
 #include "Player.h"
 #include "Enemy.h"
+#include "Consumable.h"
 #include <memory>
 #include <iterator>
 #include <algorithm>
@@ -105,6 +106,10 @@ void GameManager::InitialSetup()
     Coordinate zombieOrigin = mapManager.GetRandomRoom().get_random_coordinate();
 
     entities.push_back(Enemy::zombie(zombieOrigin.x, zombieOrigin.y));
+
+    Coordinate potionOrigin = mapManager.GetRandomRoom().get_random_coordinate();
+
+    entities.push_back(Consumable::potion(potionOrigin.x, potionOrigin.y));
 
     cHelper->HideCursor();
 }
